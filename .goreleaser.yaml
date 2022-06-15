@@ -1,0 +1,34 @@
+project_name: telegram-emote-bot
+before:
+  hooks:
+    # You may remove this if you don't use go modules.
+    - go mod tidy
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    main: ./main.go
+    binary: emotebot
+dockers:
+  - image_templates:
+    - ghcr.io/mrmarble/telegram-emote-bot:latest
+    - ghcr.io/mrmarble/telegram-emote-bot:{{.Tag}}
+    - ghcr.io/mrmarble/telegram-emote-bot:v{{.Major}}
+    - ghcr.io/mrmarble/telegram-emote-bot:v{{.Major}}.{{.Minor}}
+    extra_files:
+      - ".env.sample"
+
+archives:
+  - replacements:
+      amd64: x86_64
+checksum:
+  name_template: "checksums.txt"
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"

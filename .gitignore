@@ -1,0 +1,5 @@
+/.env
+/.task
+coverage.txt
+/emotebot
+/dist

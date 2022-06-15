@@ -1,0 +1,23 @@
+linters:
+  enable:
+    - gocognit
+    - decorder
+    - dupl
+    - durationcheck
+    - errname
+    - errorlint
+    - funlen
+    - goimports
+    - goconst
+    - gocritic
+    - gofumpt
+    - ireturn
+    - prealloc
+    - wsl
+  disable:
+    - gosimple
+    - structcheck
+    - unused
+    - staticcheck
+run:
+  tests: false
