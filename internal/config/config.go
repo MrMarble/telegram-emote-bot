@@ -13,6 +13,7 @@ type BotConfig struct {
 	CacheExpiration time.Duration `env:"CACHE_EXPIRATION" env-default:"5m"`
 	CachePurge      time.Duration `env:"CACHE_PURGE" env-default:"10m"`
 	TelegramCache   int           `env:"TELEGRAM_CACHE" env-default:"300"`
+	Debug           bool          `env:"DEBUG" env-default:"false"`
 }
 
 var cfg BotConfig

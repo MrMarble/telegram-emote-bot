@@ -12,7 +12,7 @@ import (
 )
 
 func init() {
-	zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 
 	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 }
@@ -20,13 +20,21 @@ func init() {
 func main() {
 	log.Info().Msg("Starting bot")
 
+	// Load config from environment variables
 	cfg := config.LoadConfig()
 
+	// Set debug level
+	if cfg.Debug {
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	}
+
+	// Create bot
 	bot, err := telegram.New(cfg)
 	if err != nil {
 		log.Fatal().Err(err).Msg("Failed to create bot")
 	}
 
+	// Handle SIGINT and SIGTERM to stop the bot gracefully
 	gracefulStop := make(chan os.Signal, 1)
 	signal.Notify(gracefulStop, syscall.SIGINT, syscall.SIGTERM)
 
@@ -38,5 +46,6 @@ func main() {
 		log.Info().Msg("Stopping bot")
 	}(gracefulStop)
 
+	// Start bot
 	bot.Start()
 }
