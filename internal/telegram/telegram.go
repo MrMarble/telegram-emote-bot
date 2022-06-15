@@ -35,7 +35,7 @@ func New(cfg config.BotConfig) (*Telegram, error) {
 
 	return &Telegram{
 		bot:   bot,
-		cache: ch.New(cfg.CacheExpiration, cfg.CachePurge),
+		cache: ch.GetCache(cfg.CacheExpiration, cfg.CachePurge),
 		cgf:   cfg,
 	}, nil
 }
